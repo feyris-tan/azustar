@@ -18,19 +18,25 @@ namespace AzusTar.TarModel
             byte[] buffer = new byte[512];
             if (s.Read(buffer, 0, 512) != 512)
                 throw new EndOfStreamException();
+
+            bool empty = true;
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                if (buffer[i] != 0)
+                {
+                    empty = false;
+                    break;
+                }
+            }
+            if (empty)
+                return null;
             
             child.FileName = buffer.ReadNullTerminatedString(0, 100);
 
             string filemodeOctal = buffer.ReadNullTerminatedString(100, 8);
             if (!string.IsNullOrEmpty(filemodeOctal))
             {
-                if (filemodeOctal.StartsWith("0000"))
-                {
-                    filemodeOctal = filemodeOctal.Substring(4);
-                    child.FileMode = new UnixPermissions(filemodeOctal);
-                }
-                else
-                    throw new NotImplementedException(filemodeOctal);
+                child.FileMode = new UnixPermissions(filemodeOctal);
             }
 
             string ownerOctal = buffer.ReadNullTerminatedString(108, 8);
@@ -73,6 +79,7 @@ namespace AzusTar.TarModel
                 case 'L': child.TypeFlag = TypeFlag.LongFileName; break;
                 case '0': child.TypeFlag = TypeFlag.NormalFile; break;
                 case 'M': child.TypeFlag = TypeFlag.Continuation; break;
+                case '5': child.TypeFlag = TypeFlag.Directory; break;
                 default:
                     throw new NotImplementedException(linkIndicator);
             }

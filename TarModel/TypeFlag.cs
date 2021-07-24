@@ -12,6 +12,7 @@ namespace AzusTar.TarModel
         IncrementalDirectoryInfo, /* see https://www.gnu.org/software/tar/manual/html_node/Dumpdir.html#SEC195 */
         LongFileName,
         NormalFile,
-        Continuation
+        Continuation,
+        Directory
     }
 }
