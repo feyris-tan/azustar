@@ -34,11 +34,19 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AzusTarDirectoryInfo.cs" />
+    <Compile Include="AzustarFileInfo.cs" />
+    <Compile Include="AzusTarFilesystem.cs" />
+    <Compile Include="IO\ConcatStream.cs" />
+    <Compile Include="IO\GuardedStream.cs" />
+    <Compile Include="IO\SubStream.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="TarFile.cs" />
     <Compile Include="TarModel\TypeFlag.cs" />
     <Compile Include="TarModel\UnixPermissions.cs" />
     <Compile Include="TarModel\UstarRecord.cs" />
+    <Compile Include="VolumeSplice.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
